@@ -15,6 +15,12 @@ const router = createRouter({
               component: () => import('../views/board/Post.vue'),
               meta: { title: '게시글 올리기' },
             },
+            {
+              path: 'list',
+              name: 'List',
+              component: () => import('../views/board/List.vue'),
+              meta: { title: '게시글 목록' },
+            },
           ],
         },
       ],
