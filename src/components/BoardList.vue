@@ -25,13 +25,15 @@ onMounted(async () => {
 
 <template>
   <ul v-if="!isLoading">
-    <li class="postListMain" v-for="item in boardList" :key="item.idx">
-      <div class="title">
-        <p>제목: {{ item.title }}</p>
-      </div>
-      <div class="author">
-        <p>작성자 (ID) : {{ item.author }}</p>
-      </div>
+    <li v-for="item in boardList" :key="item.idx">
+      <a class="postListMain" :href="`/board/detail?postId=${item.idx}`">
+        <div class="title">
+          <p>제목: {{ item.title }}</p>
+        </div>
+        <div class="author">
+          <p>작성자 (ID) : {{ item.author }}</p>
+        </div>
+      </a>
     </li>
   </ul>
   <div v-else>
@@ -40,6 +42,11 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .postListMain {
   display: flex;
   align-items: center;

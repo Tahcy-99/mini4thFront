@@ -21,6 +21,28 @@ const router = createRouter({
               component: () => import('../views/board/List.vue'),
               meta: { title: '게시글 목록' },
             },
+            {
+              path: 'detail',
+              name: 'Detail',
+              component: () => import('../views/board/Detail.vue'),
+              meta: { title: '게시글 상세' },
+            },
+            {
+              path: 'edit',
+              name: 'Edit',
+              component: () => import('../views/board/Edit.vue'),
+              meta: { title: '게시글 수정' },
+            },
+          ],
+        },
+        {
+          path: 'test/',
+          children: [
+            {
+              path: 'editor',
+              name: 'editor',
+              component: () => import('../components/PostEditor.vue'),
+            },
           ],
         },
       ],

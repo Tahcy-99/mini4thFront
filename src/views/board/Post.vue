@@ -1,8 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
 import api from '@/api/board'
+import PostEditor from '@/components/PostEditor.vue'
 
-const postData = reactive({
+const postNewData = reactive({
   title: '',
   content: '',
   author: '1',
@@ -11,9 +12,9 @@ const postData = reactive({
 const submitPost = async () => {
   try {
     const res = await api.postContent({
-      title: postData.title,
-      content: postData.content,
-      author: postData.author,
+      title: postNewData.title,
+      content: postNewData.content,
+      author: postNewData.author,
     })
 
     console.log(res)
@@ -28,15 +29,17 @@ const submitPost = async () => {
 <template>
   <div class="postmain">
     <div><b1>게시글 작성하기</b1></div>
-    <div class="input-row">제목 : <input v-model="postData.title" type="text" /></div>
-    <div class="input-row">내용 : <textarea v-model="postData.content"></textarea></div>
-    <div class="input-row">작성자(ID) : <input v-model="postData.author" value="1" /></div>
-    <div><button @click="submitPost" id="postBtn">작성하기</button></div>
+    <PostEditor
+      v-model:title="postNewData.title"
+      v-model:content="postNewData.content"
+      v-model:author="postNewData.author"
+    ></PostEditor>
+    <div><button @click="submitPost">작성하기</button></div>
   </div>
 </template>
 
 <style scoped>
-.postman {
+.postmain {
   display: flex;
   flex-direction: column;
 }
