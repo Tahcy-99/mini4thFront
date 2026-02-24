@@ -13,7 +13,24 @@ const postContent = async (req) => {
 
     return res
   } catch (e) {
-    alert('에러', e.message)
+    alert('에러')
+  }
+}
+
+const editContent = async (req) => {
+  try {
+    const res = await apiFetch('/board/edit', {
+      method: 'POST',
+      body: {
+        idx: req.idx,
+        title: req.title,
+        content: req.content,
+        author: req.author,
+      },
+    })
+    return res
+  } catch (e) {
+    alert('에러')
   }
 }
 
@@ -35,4 +52,4 @@ const getDetail = async (postId) => {
   }
 }
 
-export default { postContent, getList, getDetail }
+export default { postContent, getList, getDetail, editContent }

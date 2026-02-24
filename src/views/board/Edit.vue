@@ -16,10 +16,26 @@ const edittedPost = ref({
   author: '',
 })
 
+const edittingBody = ref({
+  idx: postId,
+  title: '',
+  content: '',
+  author: '',
+})
+
+const submit = async () => {
+  edittingBody.value.idx = postId
+  edittingBody.value.title = edittedPost.value.title
+  edittingBody.value.content = edittedPost.value.content
+  console.log(edittingBody.value)
+  await api.editContent(edittingBody.value)
+}
+
 onMounted(async () => {
   isLoading.value = true
   try {
     edittedPost.value = await api.getDetail(postId)
+    edittingBody.value.author = edittedPost.value.author
   } catch (error) {
     if (error) {
       badRequest.value = true
@@ -37,10 +53,13 @@ onMounted(async () => {
       v-model:content="edittedPost.content"
       v-model:author="edittedPost.author"
     ></PostEditor>
-    <div><button>수정하기</button></div>
+    <div><button @click="submit">수정하기</button></div>
   </div>
   <div v-else-if="badRequest">불러오는중</div>
-  <div v-else>잘못된 접근</div>
+  <div v-else>
+    <div>잘못된 접근</div>
+    <button onclick="history.back()">뒤로가기</button>
+  </div>
 </template>
 
 <style scoped>
