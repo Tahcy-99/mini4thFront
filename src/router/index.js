@@ -41,9 +41,9 @@ const router = createRouter({
           path: 'user/',
           children: [
             {
-              path: 'login',
-              name: 'Login',
-              component: () => import('../components/PostEditor.vue'),
+              path: 'signin',
+              name: 'Signin',
+              component: () => import('../views/user/Signin.vue'),
             },
           ],
         },
