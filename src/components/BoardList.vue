@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import api from '@/api/board/index'
 
 const props = defineProps({
@@ -9,46 +9,51 @@ const props = defineProps({
   },
 })
 
-const list = reactive({
-  title: '',
-  author: '',
-})
+const boardList = ref([])
+const isLoading = ref(true)
 
 const loadList = async (pageNumber) => {
-  const res = await api.getList(pageNumber)
-  list.title = res.title
-  list.author = res.author
+  return await api.getList(pageNumber)
 }
 
-onMounted(() => {
-  loadList(props.page)
+onMounted(async () => {
+  isLoading.value = true
+  boardList.value = await loadList(props.page)
+  isLoading.value = false
 })
-
-watch(
-  () => props.page,
-  (newPage) => {
-    loadList(newPage)
-  },
-)
 </script>
 
 <template>
-  <div class="postListMain">
-    <div class="title">
-      <div>제목 :</div>
-
-      <div>내용 여기에</div>
-    </div>
-    <div class="author">
-      <div>작성자 (ID) :</div>
-      <div>작성자 여기에</div>
-    </div>
+  <ul v-if="!isLoading">
+    <li class="postListMain" v-for="item in boardList" :key="item.idx">
+      <div class="title">
+        <p>제목: {{ item.title }}</p>
+      </div>
+      <div class="author">
+        <p>작성자 (ID) : {{ item.author }}</p>
+      </div>
+    </li>
+  </ul>
+  <div v-else>
+    <p>게시글을 불러오는 중입니다...</p>
   </div>
 </template>
 
 <style scoped>
 .postListMain {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+.title {
+  width: 100px;
+  font-weight: bold;
+  color: #555;
+  flex: 3;
+}
+.author {
+  flex: 1;
+  color: #333;
 }
 </style>
