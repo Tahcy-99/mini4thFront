@@ -26,4 +26,13 @@ const getList = async (page) => {
   }
 }
 
-export default { postContent, getList }
+const getDetail = async (postId) => {
+  try {
+    const res = await apiFetch(`/board/detail?postId=${postId}`)
+    return res
+  } catch (e) {
+    alert('페이지 호출 실패')
+  }
+}
+
+export default { postContent, getList, getDetail }
