@@ -1,4 +1,4 @@
-import { apiFetch } from '@/plugins/axiosinterceptor'
+import api, { apiFetch } from '@/plugins/axiosinterceptor'
 
 const postContent = async (req) => {
   try {
@@ -16,4 +16,14 @@ const postContent = async (req) => {
     alert('에러', e.message)
   }
 }
-export default { postContent }
+
+const getList = async (page) => {
+  try {
+    const res = await apiFetch(`/board/list?page=${page}`)
+    return res
+  } catch (e) {
+    alert('페이지 호출 실패')
+  }
+}
+
+export default { postContent, getList }
