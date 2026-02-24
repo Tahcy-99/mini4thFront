@@ -34,7 +34,7 @@ const submitPost = async () => {
       v-model:content="postNewData.content"
       v-model:author="postNewData.author"
     ></PostEditor>
-    <div><button @click="submitPost" id="postBtn">작성하기</button></div>
+    <div><button @click="submitPost">작성하기</button></div>
   </div>
 </template>
 
