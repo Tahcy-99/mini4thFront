@@ -8,6 +8,7 @@ const route = useRoute()
 const postId = route.query.postId
 
 const isLoading = ref(true)
+const badRequest = ref(false)
 
 const edittedPost = ref({
   title: '',
@@ -17,7 +18,13 @@ const edittedPost = ref({
 
 onMounted(async () => {
   isLoading.value = true
-  edittedPost.value = await api.getDetail(postId)
+  try {
+    edittedPost.value = await api.getDetail(postId)
+  } catch (error) {
+    if (error) {
+      badRequest.value = true
+    }
+  }
   isLoading.value = false
 })
 </script>
@@ -32,7 +39,8 @@ onMounted(async () => {
     ></PostEditor>
     <div><button>수정하기</button></div>
   </div>
-  <div v-else>불러오는중</div>
+  <div v-else-if="badRequest">불러오는중</div>
+  <div v-else>잘못된 접근</div>
 </template>
 
 <style scoped>
