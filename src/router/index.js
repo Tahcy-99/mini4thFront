@@ -1,3 +1,4 @@
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -5,6 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      component: DefaultLayout,
       children: [
         {
           path: 'board/',
@@ -32,6 +34,16 @@ const router = createRouter({
               name: 'Edit',
               component: () => import('../views/board/Edit.vue'),
               meta: { title: '게시글 수정' },
+            },
+          ],
+        },
+        {
+          path: 'user/',
+          children: [
+            {
+              path: 'login',
+              name: 'Login',
+              component: () => import('../components/PostEditor.vue'),
             },
           ],
         },
