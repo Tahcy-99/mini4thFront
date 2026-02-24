@@ -32,6 +32,7 @@ onMounted(async () => {
     </div>
   </div>
   <div v-else>로딩중</div>
+  <div><button onclick="history.back()">뒤로가기</button></div>
 </template>
 
 <style scoped>
